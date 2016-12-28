@@ -12,9 +12,14 @@ module.exports = (config) => {
     }
     
     module.createProfile = (key, userRecord, cb) => {
+    	var profile = {};
+    	profile.email = userRecord.email;
+    	profile.displayName = userRecord.displayName;
+    	profile.photoURL = userRecord.photoURL;
+    	
     	ds.save( {
     		key: ds.key([Profile, key]),
-    		data: userRecord
+    		data: profile
     	}, cb);
     }
 
