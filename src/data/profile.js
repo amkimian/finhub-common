@@ -10,6 +10,13 @@ module.exports = (config) => {
           cb(err, profile);
         });
     }
+    
+    module.createProfile = (key, userRecord, cb) => {
+    	ds.save( {
+    		key: ds.key([Profile, key]),
+    		data: userRecord
+    	}, cb);
+    }
 
     return module;
   };
