@@ -8,5 +8,9 @@ module.exports = () => {
 		return require('./data/profile.js')(module.config.getConfig(projectId));
 	};
 
+	module.dataset = (projectId) => {
+		return require('./data/dataset.js')(module.config.getConfig(projectId));
+	}
+
 	return module;
 }
