@@ -54,10 +54,10 @@ module.exports = (config) => {
 	};
 
 	module.getDataSetById = (id, ownerId, cb) => {
-		//const dsKey = ds.key(['Profile', ownerId, DataSet, id]);
+		const dsKey = ds.key(['Profile', ownerId, DataSet, ds.int(id)]);
 		console.log("Id is " + id);
 		console.log("Profile Id is " + ownerId);
-		const dsKey = ds.key([DataSet, id]);
+		//const dsKey = ds.key([DataSet, id]);
 		ds.get(dsKey, (err, dataset) => {
 			// dataset.id = dataset[ds.KEY];
 			cb(err, dataset);
