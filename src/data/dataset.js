@@ -18,9 +18,9 @@ module.exports = (config) => {
 		});
 	};
 
-	module.putDataSet = (dataset, cb) => {
+	module.putDataSet = (dataset, owner, cb) => {
 		ds.save({
-			key: ds.key([DataSet]),
+			key: ds.key(['Profile', owner, DataSet]),
 			data: dataset
 		}, cb);
 	};
