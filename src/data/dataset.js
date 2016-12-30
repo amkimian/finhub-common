@@ -21,11 +21,7 @@ module.exports = (config) => {
 		ds.runQuery(query, (err, datasets, info) => {
 			// Promote the key into the id property
 			var ds2 = datasets.map(function(entity) {
-				var newE = entity;
-				var k = entity[ds.KEY];
-				var idPath = btoa(JSON.stringify(k.path));
-				newE.idPath = idPath;
-				return newE;
+				return addIdPath(entity);
 			});
 			//console.log("Keys are " + JSON.stringify(keys));
 			cb(err, ds2, info);
@@ -43,11 +39,7 @@ module.exports = (config) => {
 		ds.runQuery(query, (err, datasets, info) => {
 			// Promote the key into the id property
 			var ds2 = datasets.map(function(entity) {
-				var newE = entity;
-				var k = entity[ds.KEY];
-				var idPath = btoa(JSON.stringify(k.path));
-				newE.idPath = idPath;
-				return newE;
+				return addIdPath(entity);
 			});
 			cb(err, ds2, info);
 		});
@@ -60,13 +52,23 @@ module.exports = (config) => {
 		}, cb);
 	};
 
+	var addIdPath = (entity) => {
+		var newE = entity;
+		var k = entity[ds.KEY];
+		var idPath = btoa(JSON.stringify(k.path));
+		newE.idPath = idPath;
+		return newE;
+	};
+
 	module.getDataSetById = (idPath, ownerId, cb) => {
 		const pathDecomp = JSON.parse(atob(idPath));
 		const dsKey = ds.key(pathDecomp);
 		//const dsKey = ds.key([DataSet, id]);
 		ds.get(dsKey, (err, dataset) => {
-			// dataset.id = dataset[ds.KEY];
-			cb(err, dataset);
+			if (err) {
+				return cb(err);
+			}
+			cb(err, addIdPath(dataset));
 		});
 	};
 
