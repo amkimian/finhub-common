@@ -27,6 +27,25 @@ module.exports = (config) => {
 		});
 	};
 
+	module.getMarketDataSets = (userId, pageSize, pageCursor, cb) => {
+		var query = ds.createQuery(DataSet);
+		query.filter('private', false);
+		query.limit(pageSize);
+		if (pageCursor && pageCursor != 'undefined') {
+			console.log("Setting starting point for pageCursor " + pageCursor);
+			query.start(pageCursor);
+		}
+		ds.runQuery(query, (err, datasets, info) => {
+			// Promote the key into the id property
+			var ds2 = datasets.map(function(entity) {
+				var newE = entity;
+				newE.id = entity[ds.KEY];
+				return newE;
+			});
+			cb(err, ds2, info);
+		});
+	};
+
 	module.putDataSet = (dataset, owner, cb) => {
 		ds.save({
 			key: ds.key(['Profile', owner, DataSet]),
