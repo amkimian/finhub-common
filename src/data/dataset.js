@@ -14,6 +14,10 @@ module.exports = (config) => {
 			query.start(pageCursor);
 		}
 		ds.runQuery(query, (err, datasets, info) => {
+			var keys = datasets.map(function(entity) {
+				return entity[ds.KEY];
+			});
+			console.log("Keys are " + keys);
 			cb(err, datasets, info);
 		});
 	};
