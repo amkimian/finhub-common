@@ -17,7 +17,7 @@ module.exports = (config) => {
 			var keys = datasets.map(function(entity) {
 				return entity[ds.KEY];
 			});
-			console.log("Keys are " + keys);
+			console.log("Keys are " + JSON.stringify(keys));
 			cb(err, datasets, info);
 		});
 	};
