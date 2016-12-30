@@ -17,5 +17,13 @@ module.exports = (config) => {
 			cb(err, datasets, info);
 		});
 	};
+
+	module.putDataSet = (ds, cb) => {
+		ds.save({
+			key: ds.key([DataSet]),
+			data: ds
+		}, cb);
+	};
+
 	return module;
 }
