@@ -7,13 +7,16 @@ module.exports = (config) => {
 
 	module.getDataSets = (ownerId, pageSize, pageCursor, cb) => {
 		var query = ds.createQuery(DataSet);
-		query.filter('owner', ownerId);
+		const ancestorKey = ds.key(['Profile', ownerId]);
+		query.hasAncestor(ancestorKey);
+		//		query.filter('owner', ownerId);
 		query.limit(pageSize);
 		if (pageCursor && pageCursor != 'undefined') {
 			console.log("Setting starting point for pageCursor " + pageCursor);
 			query.start(pageCursor);
 		}
 		ds.runQuery(query, (err, datasets, info) => {
+			// Promote the key into the id property
 			var ds2 = datasets.map(function(entity) {
 				var newE = entity;
 				newE.id = entity[ds.KEY];
