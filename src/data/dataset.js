@@ -52,6 +52,22 @@ module.exports = (config) => {
 		}, cb);
 	};
 
+	module.createResource = (datasetid, resource, cb) => {
+		var pathDecomp = JSON.parse(atob(datasetid));
+		pathDecomp.push('Resource');
+		ds.save({
+			key: pathDecomp,
+			data: resource
+		}, (err) => {
+			if (err) {
+				return cb(err);
+			}
+			else {
+				return cb(null, btoa(JSON.stringify(pathDecomp.path)));
+			}
+		});
+	};
+
 	var addIdPath = (entity) => {
 		var newE = entity;
 		var k = entity[ds.KEY];
