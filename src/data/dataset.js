@@ -72,5 +72,14 @@ module.exports = (config) => {
 		});
 	};
 
+	module.updateDataSet = (idPath, dataset, cb) => {
+		const pathDecomp = JSON.parse(atob(idPath));
+		const dsKey = ds.key(pathDecomp);
+		ds.save({
+			key: dsKey,
+			data: dataset
+		}, cb);
+	};
+
 	return module;
 }
