@@ -1,3 +1,5 @@
+const btoa = require('btoa');
+
 module.exports = (config) => {
 	var module = {};
 	const gcloud = require('google-cloud');
@@ -19,7 +21,9 @@ module.exports = (config) => {
 			// Promote the key into the id property
 			var ds2 = datasets.map(function(entity) {
 				var newE = entity;
-				newE.id = entity[ds.KEY];
+				var k = entity[ds.KEY];
+				var idPath = btoa(JSON.stringify(k.path));
+				newE.idPath = idPath;
 				return newE;
 			});
 			//console.log("Keys are " + JSON.stringify(keys));
@@ -39,7 +43,9 @@ module.exports = (config) => {
 			// Promote the key into the id property
 			var ds2 = datasets.map(function(entity) {
 				var newE = entity;
-				newE.id = entity[ds.KEY];
+				var k = entity[ds.KEY];
+				var idPath = btoa(JSON.stringify(k.path));
+				newE.idPath = idPath;
 				return newE;
 			});
 			cb(err, ds2, info);

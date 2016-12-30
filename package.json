@@ -10,6 +10,7 @@
   "main": "src/index.js",
   "dependencies": {
     "async": "^2.0.1",
+    "btoa": "^1.1.2",
     "google-cloud": "^0.44.2"
   }
 }
