@@ -18,10 +18,10 @@ module.exports = (config) => {
 		});
 	};
 
-	module.putDataSet = (ds, cb) => {
+	module.putDataSet = (dataset, cb) => {
 		ds.save({
 			key: ds.key([DataSet]),
-			data: ds
+			data: dataset
 		}, cb);
 	};
 
