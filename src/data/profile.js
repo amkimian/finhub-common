@@ -55,5 +55,16 @@ module.exports = (config) => {
 			cb(null, profile);
 		}
 	};
+
+	module.getProfileBucket = (key, cb) => {
+		ds.get(ds.key([Profile, key]), (err, profile) => {
+			if (err) {
+				return cb(err);
+			}
+			else {
+				return cb(null, profile.storageBucket);
+			}
+		});
+	};
 	return module;
 };
