@@ -9,6 +9,8 @@ module.exports = (config) => {
 		var query = ds.createQuery(DataSet);
 		query.filter('owner', ownerId);
 		query.limit(pageSize);
+
+		query.select(['__key__', 'id', 'description']);
 		if (pageCursor && pageCursor != 'undefined') {
 			console.log("Setting starting point for pageCursor " + pageCursor);
 			query.start(pageCursor);
