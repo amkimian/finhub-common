@@ -62,7 +62,8 @@ module.exports = (config) => {
 				return cb(err);
 			}
 			else {
-				return cb(null, profile.storageBucket);
+				var bucket = storage.bucket(profile.storageBucket);
+				return cb(null, bucket);
 			}
 		});
 	};
