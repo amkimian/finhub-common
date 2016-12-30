@@ -68,13 +68,13 @@ module.exports = (config) => {
 		});
 	};
 
-	module.streamFile = (key, filename, id, cb) => {
+	module.streamFile = (key, filename, cb) => {
 		ds.get(ds.key([Profile, key]), (err, profile) => {
 			if (err) {
 				return cb(err);
 			}
 			var bucket = storage.bucket(profile.storageBucket);
-			var file = bucket.file(id);
+			var file = bucket.file(filename);
 			file.getMetadata((err, metadata) => {
 				if (err) {
 					return cb(err);
