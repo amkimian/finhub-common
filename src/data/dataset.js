@@ -14,11 +14,13 @@ module.exports = (config) => {
 			query.start(pageCursor);
 		}
 		ds.runQuery(query, (err, datasets, info) => {
-			var keys = datasets.map(function(entity) {
-				return entity[ds.KEY];
+			var ds2 = datasets.map(function(entity) {
+				var newE = entity;
+				newE.id = entity[ds.KEY];
+				return newE;
 			});
-			console.log("Keys are " + JSON.stringify(keys));
-			cb(err, datasets, info);
+			//console.log("Keys are " + JSON.stringify(keys));
+			cb(err, ds2, info);
 		});
 	};
 
