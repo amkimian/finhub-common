@@ -59,6 +59,7 @@ module.exports = (config) => {
 		const dsKey = ds.key([DataSet, id]);
 		query.filter('__key__', '=', dsKey);
 		query.hasAncestor(ancestorKey);
+		console.log("Filter is " + JSON.stringify(query));
 		ds.runQuery(query, (err, datasets, info) => {
 			// Promote the key into the id property
 			if (err) {
