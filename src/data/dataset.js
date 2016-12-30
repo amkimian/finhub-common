@@ -7,7 +7,6 @@ module.exports = (config) => {
 
 	module.getDataSets = (ownerId, pageSize, pageCursor, cb) => {
 		var query = ds.createQuery(DataSet);
-		query.select(['__key__', 'dataset', 'description']);
 		query.filter('owner', ownerId);
 		query.limit(pageSize);
 		if (pageCursor && pageCursor != 'undefined') {
