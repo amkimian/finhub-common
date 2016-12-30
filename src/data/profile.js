@@ -67,5 +67,28 @@ module.exports = (config) => {
 			}
 		});
 	};
+
+	module.streamFile = (key, filename, id, cb) => {
+		ds.get(ds.key([Profile, key]), (err, profile) => {
+			if (err) {
+				return cb(err);
+			}
+			var bucket = storage.bucket(profile.storageBucket);
+			var file = bucket.file(id);
+			file.getMetadata((err, metadata) => {
+				if (err) {
+					return cb(err);
+				}
+				file.download((err, contents) => {
+					if (err) {
+						cb(err);
+					}
+					else {
+						cb(null, metadata.contentType, contents);
+					}
+				});
+			});
+		});
+	}
 	return module;
 };
