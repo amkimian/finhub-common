@@ -54,25 +54,10 @@ module.exports = (config) => {
 	};
 
 	module.getDataSetById = (id, ownerId, cb) => {
-		var query = ds.createQuery(DataSet);
 		const dsKey = ds.key(['Profile', ownerId, DataSet, id]);
-		query.filter('__key__', dsKey);
-		//query.hasAncestor(ancestorKey);
-		//console.log("Filter is " + JSON.stringify(query));
-		ds.runQuery(query, (err, datasets, info) => {
-			// Promote the key into the id property
-			if (err) {
-				return cb(err);
-			}
-			if (datasets.length == 0) {
-				return cb("no dataset");
-			}
-			var ds2 = datasets.map(function(entity) {
-				var newE = entity;
-				newE.id = entity[ds.KEY];
-				return newE;
-			});
-			cb(err, ds2[0], info);
+		ds.get(dsKey, (err, dataset) => {
+			// dataset.id = dataset[ds.KEY];
+			cb(err, dataset);
 		});
 	};
 
