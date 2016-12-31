@@ -71,6 +71,20 @@ module.exports = (config) => {
 		});
 	};
 
+	module.getResources = (datasetid, cb) => {
+		var pathDecomp = JSON.parse(atob(datasetid));
+		var ancestorKey = ds.key(pathDecomp);
+		var query = ds.createQuery('Res');
+		query.hasAncestor(ancestorKey);
+		ds.runQuery(query, (err, resources, info) => {
+			// Promote the key into the id property
+			var ds2 = resources.map(function(entity) {
+				return addIdPath(entity);
+			});
+			cb(err, ds2, info);
+		});
+	};
+
 	var addIdPath = (entity) => {
 		var newE = entity;
 		var k = entity[ds.KEY];
