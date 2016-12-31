@@ -55,6 +55,8 @@ module.exports = (config) => {
 	module.createResource = (datasetid, resource, cb) => {
 		var pathDecomp = JSON.parse(atob(datasetid));
 		pathDecomp.push('Res');
+		pathDecomp.push(resource.name);
+		console.log("Key path is " + JSON.stringify(pathDecomp));
 		var dsKey = ds.key(pathDecomp);
 		ds.save({
 			key: dsKey,
